@@ -57,7 +57,7 @@ def nldalecx2(X,i):
         nee.append(-(1-d.p_2)*ACM(C_f[x], x)[0]+d.p_8*d.T[x]*C_l[x]+d.p_9*d.T[x]*C_s[x])
         Xlist=np.append(Xlist, np.array([[C_f[x],C_r[x],C_w[x],C_l[x],C_s[x]]]), axis=0)
 	    
-    return C_f #Xlist, nee
+    return nee #C_f #Xlist, nee
 
 
 #Linear DALEC model !!TEST MODEL!!
