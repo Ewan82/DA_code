@@ -34,7 +34,7 @@ def ACM(Cf,i):
     GPP = GPPfunc(Cf)
     GPP_diff=  GPPdifffunc(Cf)
     GPP_diff2 = misc.derivative(GPPfunc,Cf) 
-    return GPP, GPP_diff2 #, GPP_diff2
+    return GPP, GPP_diff #, GPP_diff2
 	
 
 #Non-linear DALEC model
