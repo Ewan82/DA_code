@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import matrix
 from numpy import linalg
-import DAmodel as DAm
+import DAmodel4 as DAm
 import Data2 as D
 import math
 import matplotlib.pyplot as plt

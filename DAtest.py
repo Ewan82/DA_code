@@ -4,6 +4,7 @@ from numpy import linalg
 import DAmodel4 as DAm
 import DAmodel4 as DAm2
 import Data2 as D
+import DACost3 as DAC3
 d=D.dalecData()
 import math
 import matplotlib.pyplot as plt
@@ -16,9 +17,9 @@ dx=[5.6,10.,76.,3.5,988.8]
 def Lmodtest(lam,i):
     x0h=[x0[0]+lam*dx[0],x0[1]+lam*dx[1],x0[2]+lam*dx[2],x0[3]+lam*dx[3],x0[4]+lam*dx[4]]
     dxlam=[lam*dx[0],lam*dx[1],lam*dx[2],lam*dx[3],lam*dx[4]]
-    mxdx=DAm.nldalecx2(x0h,i)[i-1,0]
-    mx=DAm.nldalecx2(x0,i)[i-1,0]
-    Mdx=DAm.ldalecx3(x0,dxlam,i)[i-1,0]
+    mxdx=DAm.nldalec(x0h,i)[i-1,0]
+    mx=DAm.nldalec(x0,i)[i-1,0]
+    Mdx=DAm.ldalec2(x0,dxlam,i)[i-1,0]
     err=(np.linalg.norm(mxdx)-np.linalg.norm(mx))/np.linalg.norm(Mdx)
     return err
     
@@ -28,25 +29,26 @@ def Lmodtest2(lam,i):
     dx=[5.6,10.,76.,3.5,988.8]
     x0h=[x0[0]+lam*dx[0],x0[1]+lam*dx[1],x0[2]+lam*dx[2],x0[3]+lam*dx[3],x0[4]+lam*dx[4]]
     dxlam=[lam*dx[0],lam*dx[1],lam*dx[2],lam*dx[3],lam*dx[4]]
-    mxdx=DAm.nldalecx2(x0h,i)[i-1,2]
-    mx=DAm.nldalecx2(x0,i)[i-1,2]
-    Mlist=DAm.ldalecx2(x0,i)
+    mxdx=DAm.nldalec(x0h,i)[i-1,2]
+    mx=DAm.nldalec(x0,i)[i-1,2]
+    Mlist=DAm.ldalec(x0,i)
     Mdx=DAC3.Mfac(Mlist,i-1)*np.matrix(dxlam).T
     err=(np.linalg.norm(mxdx)-np.linalg.norm(mx))/np.linalg.norm(Mdx[2])
     return err #(np.linalg.norm(mxdx))/(np.linalg.norm(Mdx)+np.linalg.norm(mx))
     
 #Test for Linear model with C_f only argument
 def Lmodtest3(lam,i):
-    x0=[58.,7,7,7,7]
-    dx=[5.8,7,7,7,7]
+    x0=np.array([58.,7,7,7,7])
+    dx=np.array([5.8,7,7,7,7])
     x0h=x0+lam*dx
     dxlam=lam*dx
-    mxdx=DAm.nldalecx2(x0h,i)[i-1]
-    mx=DAm.nldalecx2(x0,i)[i-1]
-    Mdx=DAm.ldalecx3(x0,dxlam,i)[i-1]
+    mxdx=DAm.nldalec(x0h,i)[0][i-1]
+    mx=DAm.nldalec(x0,i)[0][i-1]
+    #Mlist=DAm.ldalec(x0,i)[0]
     #Mdx=DAC3.Mfac(Mlist,i)*np.matrix(dxlam).T
-    err=(mxdx-mx)/(Mdx)
-    return (mxdx-mx)/(Mdx)
+    Mdx=DAm.ldalec2(x0,dxlam,i)[i-1]
+    err=(mxdx[0]-mx[0])/(Mdx[0])
+    return err
     
 def Lmodtestfunc2(lam,i):
     print Lmodtest3(lam,i)

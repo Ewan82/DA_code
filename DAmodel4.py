@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import misc
 import matplotlib.pyplot as plt
-import Data3 as D
+import Data2 as D
 d=D.dalecData()
 
 def ACM(Cf,i):
@@ -9,7 +9,7 @@ def ACM(Cf,i):
     q=d.a_3-d.a_4
     L=(Cf/111.)
     e_0=((d.a_7*L**2)/(L**2+d.a_9))
-    g_c=(((np.abs(float(d.phi_d)))**(d.a_10))/(0.5*float(d.T_range[i])+d.a_6*float(d.R_tot)))
+    g_c=(((np.abs(float(d.phi_d[i])))**(d.a_10))/(0.5*float(d.T_range[i])+d.a_6*float(d.R_tot[i])))
     p=(((d.a_1*d.N*L)/g_c)*np.exp(d.a_8*float(d.T_max[i])))
     C_i=(0.5*(d.C_a+q-p+np.sqrt((d.C_a+q-p)**2-4*(d.C_a*q-p*d.a_3))))
     delta=(-0.408*np.cos(((360*(float(d.D[i])+10)*np.pi)/(365*180))))
@@ -21,24 +21,24 @@ def ACM(Cf,i):
         #e_0=((d.a_7*L**2)/(L**2+d.a_9))
         #GPP=((e_0*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5))/(e_0*float(d.I[i])+g_c*(d.C_a-C_i))) #0.2*float(d.I[i])*(1-np.exp(-0.5*Cf/111.))
         #GPP_diff=((2*float(d.I[i])*d.a_7*d.a_9*((111.0*g_c*(d.C_a-C_i))**2)*(d.a_2*s+d.a_5)*Cf)/(((g_c*(d.C_a-C_i)+d.a_7*float(d.I[i]))*Cf**2+d.a_9*(111.0**2)*g_c*(d.C_a-C_i))**2))  #(0.2*0.5*float(d.I[i])/111.)*np.exp(-0.5*Cf/111.)
-        GPP=(d.a_7*(Cf**2)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5))/((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i))
+        GPP= (d.a_7*(Cf**2)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5))/((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i))
         
         return GPP 
 
     def GPPdifffunc(Cf):
 		
-        GPP_diff=(2*Cf*float(d.I[i])*d.a_7*d.a_9*(111.**2)*(g_c**2)*((d.C_a-C_i)**2)*(d.a_2*s+d.a_5))/((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i))**2
+        GPP_diff=(24642.*float(d.I[i])*d.a_7*Cf*(g_c**2)*((d.C_a-C_i)**2)*(d.a_2*s+d.a_5)*d.a_9)/((Cf**2+12321.*d.a_9)*(d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2)**2 #(2*Cf*float(d.I[i])*d.a_7*d.a_9*(111.**2)*(g_c**2)*((d.C_a-C_i)**2)*(d.a_2*s+d.a_5))/((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i))**2
         
         return GPP_diff
 		
     GPP = GPPfunc(Cf)
     GPP_diff=  GPPdifffunc(Cf)
     GPP_diff2 = misc.derivative(GPPfunc,Cf) 
-    return GPP, GPP_diff2 #, GPP_diff2
+    return GPP, GPP_diff
 	
 
 #Non-linear DALEC model
-def nldalecx2(X,i):
+def nldalec(X,i):
 
     C_f=[X[0]]
     C_r=[X[1]]
@@ -62,7 +62,7 @@ def nldalecx2(X,i):
 
 
 #Linear DALEC model !!TEST MODEL!!
-def ldalecx2(X, i):   
+def ldalec(X, i):   
 
     C_f=[X[0]]
     Mlist=[None]*(i-1)
@@ -77,7 +77,7 @@ def ldalecx2(X, i):
     
     
 #Linear DALEC model !!TEST MODEL!!
-def ldalecx3(X, dX, i):   
+def ldalec2(X, dX, i):   
 
     C_f=[X[0]]
     C_fL=[dX[0]]
@@ -97,7 +97,7 @@ def ldalecx3(X, dX, i):
         C_sL.append((1-d.p_9*d.T[x-1])*C_sL[x-1]+(d.p_6)*C_wL[x-1]+(d.p_1*d.T[x-1])*C_rL[x-1])       
         Xlist=np.append(Xlist, np.array([[C_fL[x],C_rL[x],C_wL[x],C_lL[x],C_sL[x]]]), axis=0)
 
-    return C_fL #Xlist
+    return Xlist
     
 def GPP_plot(x0,i):
     Clist=nldalecx2(x0,i)[0]
