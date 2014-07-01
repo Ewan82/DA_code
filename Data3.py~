@@ -1,7 +1,8 @@
 import numpy as np
-f=open("dalec_drivers2.txt","r")
+#Editting to test Git out :)
+f=open("dalec_drivers.txt","r")
 allLines=f.readlines()
-lenrun=300
+lenrun=1000
 class dalecData( ): 
 
   def __init__(self):
@@ -91,8 +92,8 @@ class dalecData( ):
     self.a_9=1.062
     self.a_10=0.0006
     self.I=self.data[:,4] #incident radiation
-    self.phi_d=self.data[:,5] #max. soil leaf water potential difference
-    self.R_tot=self.data[:,7] #total plant-soil hydrolic resistance
+    self.phi_d= -2.0 #self.data[:,5] #max. soil leaf water potential difference
+    self.R_tot=1.0 #self.data[:,7] #total plant-soil hydrolic resistance
     self.C_a=355.0 #atmospheric carbon
     self.N=2.7 #average foliar N
     self.p_1=0.00000441

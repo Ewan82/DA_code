@@ -2,7 +2,7 @@ import numpy as np
 #Editting to test Git out :)
 f=open("dalec_drivers.txt","r")
 allLines=f.readlines()
-lenrun=1000
+lenrun=300
 class dalecData( ): 
 
   def __init__(self):

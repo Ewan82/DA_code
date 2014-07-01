@@ -57,40 +57,40 @@ def J(X):
         yi=[]
         yi_err=[]
         obs=False
-        if d.gpp[x]!=None:
-            temp.append(nlhx[x,0])
-            yi=np.append(yi,[d.gpp[x]])
-            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
-            obs=True
-        if d.lf[x]!=None:
-            temp.append(nlhx[x,1])
-            yi=np.append(yi,[d.lf[x]])
-            yi_err=np.append(yi_err,[d.lf_err[x]**2])
-            obs=True
-        if d.lw[x]!=None:
-            temp.append(nlhx[x,2])
-            yi=np.append(yi,[d.lw[x]])
-            yi_err=np.append(yi_err,[d.lw_err[x]**2])
-            obs=True
-        if d.rt[x]!=None:
-            temp.append(nlhx[x,3])
-            yi=np.append(yi,[d.rt[x]])
-            yi_err=np.append(yi_err,[d.rt_err[x]**2])
-            obs=True
+#        if d.gpp[x]!=None:
+#            temp.append(nlhx[x,0])
+#            yi=np.append(yi,[d.gpp[x]])
+#            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
+#            obs=True
+#        if d.lf[x]!=None:
+#            temp.append(nlhx[x,1])
+#            yi=np.append(yi,[d.lf[x]])
+#            yi_err=np.append(yi_err,[d.lf_err[x]**2])
+#            obs=True
+#        if d.lw[x]!=None:
+#            temp.append(nlhx[x,2])
+#            yi=np.append(yi,[d.lw[x]])
+#            yi_err=np.append(yi_err,[d.lw_err[x]**2])
+#            obs=True
+#        if d.rt[x]!=None:
+#            temp.append(nlhx[x,3])
+#           yi=np.append(yi,[d.rt[x]])
+#            yi_err=np.append(yi_err,[d.rt_err[x]**2])
+#            obs=True
         if d.nee[x]!=None:
             temp.append(nlhx[x,4])
             yi=np.append(yi,[d.nee[x]])
             yi_err=np.append(yi_err,[d.nee_err[x]**2])
             obs=True
-        if d.cf[x]!=None:
-            temp.append(nlhx[x,5])
-            yi=np.append(yi,[d.cf[x]])
-            yi_err=np.append(yi_err,[d.cf_err[x]**2])
-            obs=True
-        #if obs==False:
-        #    temp.append(0)
-        #    yi=np.append(yi,0)
-        #    yi_err=np.append(yi_err,0)
+#        if d.cf[x]!=None:
+#            temp.append(nlhx[x,5])
+#            yi=np.append(yi,[d.cf[x]])
+#            yi_err=np.append(yi_err,[d.cf_err[x]**2])
+#            obs=True
+        if obs==False:
+            temp.append(0)
+            yi=np.append(yi,0)
+            yi_err=np.append(yi_err,0)
         hx.append(np.matrix(temp))
         y.append(np.matrix(yi))
         y_err.append((yi_err))
@@ -129,47 +129,47 @@ def dJ(X):
         yi=[]
         yi_err=[]
         obs=False
-        if d.gpp[x]!=None:
-            temp.append([GPP_diff[x],0,0,0,0])
-            temp2.append(nlhx[x,0])
-            yi=np.append(yi,[d.gpp[x]])
-            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
-	    obs=True
-        if d.lf[x]!=None:
-            temp.append([d.p_5,0,0,0,0])
-            temp2.append(nlhx[x,1])
-            yi=np.append(yi,[d.lf[x]])
-            yi_err=np.append(yi_err,[d.lf_err[x]**2])
-	    obs=True
-        if d.lw[x]!=None:
-            temp.append([0,0,d.p_6,0,0])
-            temp2.append(nlhx[x,2])
-            yi=np.append(yi,[d.lw[x]])
-            yi_err=np.append(yi_err,[d.lw_err[x]**2])
-	    obs=True
-        if d.rt[x]!=None:
-            temp.append([d.p_2*GPP_diff[x],0,0,d.p_8*d.T[x],d.p_9*d.T[x]])
-            temp2.append(nlhx[x,3])
-            yi=np.append(yi,[d.rt[x]])
-            yi_err=np.append(yi_err,[d.rt_err[x]**2])
-	    obs=True
+#        if d.gpp[x]!=None:
+#            temp.append([GPP_diff[x],0,0,0,0])
+#            temp2.append(nlhx[x,0])
+#            yi=np.append(yi,[d.gpp[x]])
+#            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
+#	         obs=True
+#        if d.lf[x]!=None:
+#            temp.append([d.p_5,0,0,0,0])
+#            temp2.append(nlhx[x,1])
+#            yi=np.append(yi,[d.lf[x]])
+#            yi_err=np.append(yi_err,[d.lf_err[x]**2])
+#	         obs=True
+#        if d.lw[x]!=None:
+#            temp.append([0,0,d.p_6,0,0])
+#            temp2.append(nlhx[x,2])
+#            yi=np.append(yi,[d.lw[x]])
+#            yi_err=np.append(yi_err,[d.lw_err[x]**2])
+#	         obs=True
+#        if d.rt[x]!=None:
+#            temp.append([d.p_2*GPP_diff[x],0,0,d.p_8*d.T[x],d.p_9*d.T[x]])
+#            temp2.append(nlhx[x,3])
+#            yi=np.append(yi,[d.rt[x]])
+#            yi_err=np.append(yi_err,[d.rt_err[x]**2])
+#	         obs=True
         if d.nee[x]!=None:
             temp.append([-(1-d.p_2)*GPP_diff[x],0,0,-d.p_8*d.T[x],-d.p_9*d.T[x]])
             temp2.append(nlhx[x,4])
             yi=np.append(yi,[d.nee[x]])
             yi_err=np.append(yi_err,[d.nee_err[x]**2])
-	    obs=True
-        if d.cf[x]!=None:
-            temp.append([1,0,0,0,0])
-            temp2.append(nlhx[x,5])
-            yi=np.append(yi,[d.cf[x]])
-            yi_err=np.append(yi_err,[d.cf_err[x]**2])
-	    obs=True
-        #if obs==False:
-        #    temp.append([0,0,0,0,0])
-        #    temp2.append(0)
-        #    yi=np.append(yi,0)
-        #    yi_err=np.append(yi_err,0)
+            obs=True
+#        if d.cf[x]!=None:
+#            temp.append([1,0,0,0,0])
+#            temp2.append(nlhx[x,5])
+#            yi=np.append(yi,[d.cf[x]])
+#            yi_err=np.append(yi_err,[d.cf_err[x]**2])
+#	        obs=True
+        if obs==False:
+            temp.append([0,0,0,0,0])
+            temp2.append(0)
+            yi=np.append(yi,0)
+            yi_err=np.append(yi_err,0)
         H.append(np.matrix(np.vstack(temp)))    
         hx.append(np.matrix(temp2))
         y.append(np.matrix(yi))
@@ -190,7 +190,7 @@ def dJ(X):
     dJ=B.I*(X0-XB) -np.sum(Incr, axis=0) #Cost function first derivative
     dJlist=[float(dJ[0]),float(dJ[1]),float(dJ[2]),float(dJ[3]),float(dJ[4])]
     
-    return dJ #np.array(dJlist)
+    return np.array(dJlist) #np.array(dJlist)
 
 
 #2nd derivative of costfunction takes initial state as argument
@@ -348,7 +348,7 @@ def Plot5(X):
     #neeO=d.nee[0:lenrun]
     #lfO=d.lf[0:lenrun]
     xlist=np.arange(0,lenrun,1)
-    xa=fmin_ncg(J, X, dJ2, fhess=d2J2)
+    xa=fmin_ncg(J, X, dJ) #, fhess=d2J)
     #xa=fmin_bfgs(J, X) #fprime=dJ)
     nlhx2=DAm.nldalec(xa, lenrun)
     rtA=nlhx2[:,3]
