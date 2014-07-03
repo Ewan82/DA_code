@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import Data2 as D
 d=D.dalecData()
 
+#Agregated Canopy Model for GPP
 def ACM(Cf,i):
 	
     q=d.a_3-d.a_4
@@ -16,11 +17,11 @@ def ACM(Cf,i):
     s=(24*np.arccos((-np.tan(d.bigdelta)*np.tan(delta)))/np.pi)
 	
     def GPPfunc(Cf):
-        GPP= (d.a_7*(Cf**2)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5))/((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i))        
+        GPP= Cf**2./(Cf**2.+1.) #np.divide((d.a_7*(Cf**2)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5)),((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i)))        
         return GPP 
 
     def GPPdifffunc(Cf):		
-        GPP_diff=(24642.*float(d.I[i])*d.a_7*Cf*(g_c**2)*((d.C_a-C_i)**2)*(d.a_2*s+d.a_5)*d.a_9)/((Cf**2+12321.*d.a_9)*(d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2)**2      
+        GPP_diff= 2.*Cf/(Cf**2.+1.)**2. #np.divide((24642.*float(d.I[i])*d.a_7*Cf*(g_c**2)*((d.C_a-C_i)**2)*(d.a_2*s+d.a_5)*d.a_9),((Cf**2+12321.*d.a_9)*(d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2)**2)      
         return GPP_diff
 		
     GPP = GPPfunc(Cf)
@@ -53,7 +54,7 @@ def nldalec(X,i):
         lw[x]=d.p_6*C_w[x]
         Obslist[x]=GPP[x],lf[x],lw[x],rt[x],nee[x],C_f[x]
           
-    return np.array(Obslist), Xlist #Xlist, nee
+    return np.array(Obslist) #Xlist, nee
 
 
 #Linear DALEC model !!TEST MODEL!!

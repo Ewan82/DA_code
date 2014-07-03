@@ -65,7 +65,7 @@ def Lmodtest4(lam,i):
     return err
     
 def Lmodtestfunc2(lam,i):
-    return [abs(float(Lmodtest4(lam*10**(-x),i))-1) for x in range (0,10)]
+    return [abs(float(Lmodtest4(lam*10**(-x),i))-1) for x in range (1,10)]
 
 #Test for Adjoint    
 def Adjtest(i):
