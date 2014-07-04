@@ -9,19 +9,19 @@ def ACM(Cf,i):
 	
     q=d.a_3-d.a_4
     L=(Cf/111.)
-    e_0=((d.a_7*L**2)/(L**2+d.a_9))
+    e_0=((d.a_7*L**2.)/(L**2.+d.a_9))
     g_c=(((np.abs(float(d.phi_d[i])))**(d.a_10))/(0.5*float(d.T_range[i])+d.a_6*float(d.R_tot[i])))
-    p=(((d.a_1*d.N*L)/g_c)*np.exp(d.a_8*float(d.T_max[i])))
-    C_i=(0.5*(d.C_a+q-p+np.sqrt((d.C_a+q-p)**2-4*(d.C_a*q-p*d.a_3))))
-    delta=(-0.408*np.cos(((360*(float(d.D[i])+10)*np.pi)/(365*180))))
-    s=(24*np.arccos((-np.tan(d.bigdelta)*np.tan(delta)))/np.pi)
+    p=np.exp(d.a_8*float(d.T_max[i]))*((d.a_1*L)/g_c)#d.N*
+    C_i=(0.5*(d.C_a+q-p+np.sqrt((d.C_a+q-p)**2.-4.*(d.C_a*q-p*d.a_3))))
+    delta=(-0.408*np.cos(((360.*(float(d.D[i])+10.)*np.pi)/(365.*180.))))
+    s=(24.*np.arccos((-np.tan(d.bigdelta)*np.tan(delta)))/np.pi)
 	
     def GPPfunc(Cf):
-        GPP= Cf**2./(Cf**2.+1.) #np.divide((d.a_7*(Cf**2)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5)),((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2)+d.a_9*(111.**2)*g_c*(d.C_a-C_i)))        
+        GPP= d.a_7*(Cf**2.)*float(d.I[i])*g_c*(d.a_2*s+d.a_5)*(d.C_a-C_i)# #np.divide((d.a_7*(Cf**2.)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5)),((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2.)+d.a_9*(111.**2.)*g_c*(d.C_a-C_i)))        
         return GPP 
 
     def GPPdifffunc(Cf):		
-        GPP_diff= 2.*Cf/(Cf**2.+1.)**2. #np.divide((24642.*float(d.I[i])*d.a_7*Cf*(g_c**2)*((d.C_a-C_i)**2)*(d.a_2*s+d.a_5)*d.a_9),((Cf**2+12321.*d.a_9)*(d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2)**2)      
+        GPP_diff= 2.*d.a_7*(Cf)*float(d.I[i])*g_c*(d.a_2*s+d.a_5)*(d.C_a-C_i)# #np.divide((24642.*float(d.I[i])*d.a_7*Cf*(g_c**2.)*((d.C_a-C_i)**2.)*(d.a_2*s+d.a_5)*d.a_9),((Cf**2.+12321.*d.a_9)*(d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2.)**2.)      
         return GPP_diff
 		
     GPP = GPPfunc(Cf)
