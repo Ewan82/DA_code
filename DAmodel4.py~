@@ -8,20 +8,26 @@ d=D.dalecData()
 def ACM(Cf,i):
 	
     q=d.a_3-d.a_4
-    L=(Cf/111.)
-    e_0=((d.a_7*L**2.)/(L**2.+d.a_9))
+    #L=(Cf/111.)
+    #e_0=((d.a_7*L**2.)/(L**2.+d.a_9))
     g_c=(((np.abs(float(d.phi_d[i])))**(d.a_10))/(0.5*float(d.T_range[i])+d.a_6*float(d.R_tot[i])))
-    p=np.exp(d.a_8*float(d.T_max[i]))*((d.a_1*L)/g_c)#d.N*
-    C_i=(0.5*(d.C_a+q-p+np.sqrt((d.C_a+q-p)**2.-4.*(d.C_a*q-p*d.a_3))))
+    #p=np.exp(d.a_8*float(d.T_max[i]))*((d.a_1*d.N)/g_c)#*L
+    #C_i=(0.5*(d.d.C_a+q-p+np.np.sqrt((d.d.C_a+q-p)**2.-4.*(d.d.C_a*q-p*d.a_3))))
     delta=(-0.408*np.cos(((360.*(float(d.D[i])+10.)*np.pi)/(365.*180.))))
     s=(24.*np.arccos((-np.tan(d.bigdelta)*np.tan(delta)))/np.pi)
+    psi=np.exp(d.a_8*float(d.T_max[i]))*((d.a_1*d.N)/(g_c*111.))
+    a=np.exp(d.a_8*float(d.T_max[i]))*((d.a_1*d.N)/(g_c*111.))
+    phi=d.a_7*float(d.I[i])*g_c
+    I=float(d.I[i])
 	
     def GPPfunc(Cf):
-        GPP= d.a_7*(Cf**2.)*float(d.I[i])*g_c*(d.a_2*s+d.a_5)*(d.C_a-C_i)# #np.divide((d.a_7*(Cf**2.)*float(d.I[i])*g_c*(d.C_a-C_i)*(d.a_2*s+d.a_5)),((d.a_7*float(d.I[i])+g_c*(d.C_a-C_i))*(Cf**2.)+d.a_9*(111.**2.)*g_c*(d.C_a-C_i)))        
+        GPP=.5*phi*Cf**2*(d.C_a-q+psi*Cf-np.sqrt((d.C_a+q-psi*Cf)**2-4.*(d.C_a*q-d.a_3*psi*Cf)))*(d.a_2*s+d.a_5)/(I*d.a_7*Cf**2+.5*g_c*(Cf**2+d.a_9*111.**2)*(d.C_a-q+psi*Cf-np.sqrt((d.C_a+q-psi*Cf)**2-4.*(d.C_a*q-d.a_3*psi*Cf))))
+		#d.a_7*(Cf**2.)*float(d.I[i])*g_c*(d.a_2*s+d.a_5)*(d.d.C_a-C_i)# #np.divide((d.a_7*(Cf**2.)*float(d.I[i])*g_c*(d.d.C_a-C_i)*(d.a_2*s+d.a_5)),((d.a_7*float(d.I[i])+g_c*(d.d.C_a-C_i))*(Cf**2.)+d.a_9*(111.**2.)*g_c*(d.d.C_a-C_i)))        
         return GPP 
 
-    def GPPdifffunc(Cf):		
-        GPP_diff= 2.*d.a_7*(Cf)*float(d.I[i])*g_c*(d.a_2*s+d.a_5)*(d.C_a-C_i)# #np.divide((24642.*float(d.I[i])*d.a_7*Cf*(g_c**2.)*((d.C_a-C_i)**2.)*(d.a_2*s+d.a_5)*d.a_9),((Cf**2.+12321.*d.a_9)*(d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2.)**2.)      
+    def GPPdifffunc(Cf):
+        GPP_diff=(((2.*(d.a_2*s+d.a_5))*(-49284.*q*d.a_9*psi*Cf+49284.*psi*Cf*d.a_3*d.a_9-49284.*d.C_a*d.a_9*q+24642.*psi**2*Cf**2*d.a_9+24642.*d.a_9*d.C_a**2+24642.*d.a_9*q**2)*phi*Cf*g_c+(2.*I)*(d.a_2*s+d.a_5)*psi*Cf**4*d.a_7*phi)*np.sqrt(psi**2*Cf**2+(-2.*d.C_a-2.*q+4.*d.a_3)*psi*Cf+d.C_a**2-2.*d.C_a*q+q**2)+(-(49284.*(d.a_2*s+d.a_5))*psi**3*d.a_9*phi*Cf**4+(2.*(d.a_2*s+d.a_5))*(24642.*d.C_a-98568.*d.a_3+73926.*q)*phi*psi**2*d.a_9*Cf**3+(2.*(d.a_2*s+d.a_5))*(-98568.*d.a_3*d.C_a+98568.*d.a_3*q+49284.*d.C_a*q-73926.*q**2+24642.*d.C_a**2)*phi*psi*d.a_9*Cf**2+(2.*(d.a_2*s+d.a_5))*(-73926.*d.C_a*q**2-24642.*d.C_a**3+24642.*q**3+73926.*d.C_a**2*q)*phi*d.a_9*Cf)*g_c-(2.*I)*(d.a_2*s+d.a_5)*psi**2*d.a_7*phi*Cf**5+(2.*(d.a_2*s+d.a_5))*((1.*I)*q*d.a_7+(1.*I)*d.C_a*d.a_7-(2.*I)*d.a_3*d.a_7)*phi*psi*Cf**4)/(np.sqrt(psi**2*Cf**2+(-2.*d.C_a-2.*q+4.*d.a_3)*psi*Cf+d.C_a**2-2.*d.C_a*q+q**2)*((2.*I)*d.a_7*Cf**2+g_c*Cf**2*d.C_a-1.*g_c*Cf**2*q+g_c*Cf**3*psi-1.*g_c*Cf**2*np.sqrt(psi**2*Cf**2+(-2.*d.C_a-2.*q+4.*d.a_3)*psi*Cf+d.C_a**2-2.*d.C_a*q+q**2)+12321.*g_c*d.a_9*d.C_a-12321.*g_c*d.a_9*q+12321.*g_c*d.a_9*psi*Cf-12321.*g_c*d.a_9*np.sqrt(psi**2*Cf**2+(-2.*d.C_a-2.*q+4.*d.a_3)*psi*Cf+d.C_a**2-2.*d.C_a*q+q**2))**2)
+		#2.*d.a_7*(Cf)*float(d.I[i])*g_c*(d.a_2*s+d.a_5)*(d.d.C_a-C_i)# #np.divide((24642.*float(d.I[i])*d.a_7*Cf*(g_c**2.)*((d.d.C_a-C_i)**2.)*(d.a_2*s+d.a_5)*d.a_9),((Cf**2.+12321.*d.a_9)*(d.d.C_a-C_i)*g_c+float(d.I[i])*d.a_7*Cf**2.)**2.)      
         return GPP_diff
 		
     GPP = GPPfunc(Cf)
@@ -54,7 +60,7 @@ def nldalec(X,i):
         lw[x]=d.p_6*C_w[x]
         Obslist[x]=GPP[x],lf[x],lw[x],rt[x],nee[x],C_f[x]
           
-    return np.array(Obslist) #Xlist, nee
+    return np.array(Obslist) #,Xlist, nee
 
 
 #Linear DALEC model !!TEST MODEL!!
@@ -94,7 +100,7 @@ def ldalec2(X, dX, i):
  
 #Plot GPP and GPP_diff   
 def GPP_plot(x0,i):
-    Clist=nldalec(x0,i)[0]
+    Clist=nldalec(x0,i)[1]
     Cf=Clist[:,0]
     GPP=[None]*i
     for x in range(i):

@@ -11,7 +11,7 @@ d=D.dalecData()
 
 B=matrix([[d.sigB_cf,0,0,0,0],[0,d.sigB_cw,0,0,0],[0,0,d.sigB_cr,0,0],[0,0,0,d.sigB_cl,0],[0,0,0,0,d.sigB_cs]]) #Background error covariance matrix
 XB=np.matrix([58.,102.,770.,40.,9897.]).T #Background state
-lenrun=300 #assimilation window length
+lenrun=10 #assimilation window length
 
 #Matrix factoral function
 def Mfac(Mlist,a): #Matrix factoral to find product of M matrices
@@ -195,7 +195,7 @@ def dJ(X):
     dJ=B.I*(X0-XB) -np.sum(Incr, axis=0) #Cost function first derivative
     dJlist=[float(dJ[0]),float(dJ[1]),float(dJ[2]),float(dJ[3]),float(dJ[4])]
     
-    return np.array(dJlist) #np.array(dJlist)
+    return dJ #np.array(dJlist) 
 
 
 #2nd derivative of costfunction takes initial state as argument

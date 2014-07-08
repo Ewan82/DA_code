@@ -60,7 +60,7 @@ def nldalec(X,i):
         lw[x]=d.p_6*C_w[x]
         Obslist[x]=GPP[x],lf[x],lw[x],rt[x],nee[x],C_f[x]
           
-    return np.array(Obslist) #,Xlist, nee
+    return np.array(Obslist) ,Xlist, nee
 
 
 #Linear DALEC model !!TEST MODEL!!

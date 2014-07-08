@@ -29,21 +29,21 @@ def Lmodtest2(lam,i):
     dx=[5.6,10.,76.,3.5,988.8]
     x0h=[x0[0]+lam*dx[0],x0[1]+lam*dx[1],x0[2]+lam*dx[2],x0[3]+lam*dx[3],x0[4]+lam*dx[4]]
     dxlam=[lam*dx[0],lam*dx[1],lam*dx[2],lam*dx[3],lam*dx[4]]
-    mxdx=DAm.nldalec(x0h,i)[i-1,2]
-    mx=DAm.nldalec(x0,i)[i-1,2]
-    Mlist=DAm.ldalec(x0,i)
+    mxdx=DAm.nldalec(x0h,i)[1][i-1]
+    mx=DAm.nldalec(x0,i)[1][i-1]
+    Mlist=DAm.ldalec(x0,i)[0]
     Mdx=DAC3.Mfac(Mlist,i-1)*np.matrix(dxlam).T
-    err=(np.linalg.norm(mxdx)-np.linalg.norm(mx))/np.linalg.norm(Mdx[2])
+    err=(np.linalg.norm(mxdx-mx))/np.linalg.norm(Mdx)
     return err #(np.linalg.norm(mxdx))/(np.linalg.norm(Mdx)+np.linalg.norm(mx))
     
 #Test for Linear model with C_f only argument
 def Lmodtest3(lam,i):
-    x0=np.array([58.,7,7,7,7])
-    dx=np.array([5.8,7,7,7,7])
+    x0=np.array([56.,100.,760.,35.,9888.])
+    dx=np.array([5.6,10.,76.,3.5,988.8])
     x0h=x0+lam*dx
     dxlam=lam*dx
-    mxdx=DAm.nldalec(x0h,i)[0][i-1]
-    mx=DAm.nldalec(x0,i)[0][i-1]
+    mxdx=DAm.nldalec(x0h,i)[1][i-1]
+    mx=DAm.nldalec(x0,i)[1][i-1]
     #Mlist=DAm.ldalec(x0,i)[0]
     #Mdx=DAC3.Mfac(Mlist,i)*np.matrix(dxlam).T
     Mdx=DAm.ldalec2(x0,dxlam,i)[i-1]
@@ -65,7 +65,7 @@ def Lmodtest4(lam,i):
     return err
     
 def Lmodtestfunc2(lam,i):
-    a=[abs(float(Lmodtest4(lam*10**(-x),i))-1) for x in range (0,10)]
+    a=[abs(float(Lmodtest4(lam*10**(-x),i)))-1 for x in range (0,5)]
     plt.plot(np.arange(0,len(a),1),a)
     plt.show()
     return a
@@ -101,18 +101,9 @@ def Gradtest2(alph):
     c=hM.T*DAC3.dJ(x0)+DAC3.J(x0)
     return a/c
 
-def Lmodtestfunc(lam,i):
-    print Lmodtest2(lam,i)
-    print Lmodtest2(lam*0.1,i)
-    print Lmodtest2(lam*0.001,i)
-    print Lmodtest2(lam*0.0001,i)
-    print Lmodtest2(lam*0.00001,i)
-    print Lmodtest2(lam*0.000001,i)
-    
 def Gradtestfunc(lam):
-    print Gradtest(lam)
-    print Gradtest(lam*0.1)
-    print Gradtest(lam*0.001)
-    print Gradtest(lam*0.0001)
-    print Gradtest(lam*0.00001)
-    print Gradtest(lam*0.000001)
+    a=[float(Gradtest(lam*10**(-x))) for x in range (0,5)]
+    plt.plot(np.arange(0,len(a),1),a)
+    plt.show()
+    return a
+
