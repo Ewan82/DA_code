@@ -11,7 +11,7 @@ d=D.dalecData()
 
 B=matrix([[d.sigB_cf,0,0,0,0],[0,d.sigB_cw,0,0,0],[0,0,d.sigB_cr,0,0],[0,0,0,d.sigB_cl,0],[0,0,0,0,d.sigB_cs]]) #Background error covariance matrix
 XB=np.matrix([58.,102.,770.,40.,9897.]).T #Background state
-lenrun=4 #assimilation window length
+lenrun=150 #assimilation window length
 
 #Matrix factoral function
 def Mfac(Mlist,a): #Matrix factoral to find product of M matrices
@@ -44,7 +44,7 @@ def Rmat(y1_err):
 
 #Cost function that takes initial state as argument
 def J(X):
-    nlhx=DAm.nldalec(X,lenrun) #Run nonlinear model for length run outputing models obs guess
+    nlhx=DAm.nldalec(X,lenrun)[0] #Run nonlinear model for length run outputing models obs guess
     X1=[float(X[0]),float(X[1]),float(X[2]),float(X[3]),float(X[4])]
     X0=np.matrix(X1).T
 
@@ -113,8 +113,8 @@ def J(X):
 
 #Derivative of costfunction takes initial state as argument
 def dJ(X):
-    Mlist,GPP_diff=DAm.ldalec(X,lenrun) #run linear model out list of linear model matrices and value for GPP derivative at each time step
-    nlhx=DAm.nldalec(X,lenrun) #run nonlinear model for obs guess output
+    Mlist,GPP_diff,M=DAm.ldalec(X,lenrun) #run linear model out list of linear model matrices and value for GPP derivative at each time step
+    nlhx=DAm.nldalec(X,lenrun)[0] #run nonlinear model for obs guess output
     X1=[X[0],X[1],X[2],X[3],X[4]]
     X0=np.matrix(X1).T
 
