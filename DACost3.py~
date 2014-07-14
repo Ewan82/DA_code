@@ -11,7 +11,7 @@ d=D.dalecData()
 
 B=matrix([[d.sigB_cf,0,0,0,0],[0,d.sigB_cw,0,0,0],[0,0,d.sigB_cr,0,0],[0,0,0,d.sigB_cl,0],[0,0,0,0,d.sigB_cs]]) #Background error covariance matrix
 XB=np.matrix([58.,102.,770.,40.,9897.]).T #Background state
-lenrun=150 #assimilation window length
+lenrun=400 #assimilation window length
 
 #Matrix factoral function
 def Mfac(Mlist,a): #Matrix factoral to find product of M matrices
@@ -195,7 +195,7 @@ def dJ(X):
     dJ=B.I*(X0-XB) -np.sum(Incr, axis=0) #Cost function first derivative
     dJlist=[float(dJ[0]),float(dJ[1]),float(dJ[2]),float(dJ[3]),float(dJ[4])]
     
-    return dJ #np.array(dJlist) 
+    return np.array(dJlist) 
 
 
 #2nd derivative of costfunction takes initial state as argument
@@ -343,7 +343,7 @@ def Plot4(X):
     plt.show()
 
 def Plot5(X):
-    nlhx=DAm.nldalec(X,lenrun)
+    nlhx=DAm.nldalec(X,lenrun)[0]
     gppB=nlhx[:,0]
     neeB=nlhx[:,4]
     lfB=nlhx[:,1]
@@ -355,7 +355,7 @@ def Plot5(X):
     xlist=np.arange(0,lenrun,1)
     xa=fmin_ncg(J, X, dJ) #, fhess=d2J)
     #xa=fmin_bfgs(J, X) #fprime=dJ)
-    nlhx2=DAm.nldalec(xa, lenrun)
+    nlhx2=DAm.nldalec(xa, lenrun)[0]
     rtA=nlhx2[:,3]
     gppA=nlhx2[:,0]
     neeA=nlhx2[:,4]

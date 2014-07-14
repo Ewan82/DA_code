@@ -111,22 +111,3 @@ def GPP_plot(x0,i):
     plt.plot(xlist,GPP)
     plt.show()    
     
-	
-def f(x,i):
-    g=[x]
-    for x in xrange(1,i):
-        g.append((1-0.005)*g[x-1]+0.42*g[x-1]**2)
-
-    return g    
-	
-def f_diff(x, dx, i):
-    g=[x]
-    gL=[dx]
-	
-    for x in xrange(1,i):
-        g.append((1-0.005)*g[x-1]+0.42*g[x-1]**2)   
-        gL.append((1-0.005)*gL[x-1]+0.42*2*g[x-1]*gL[x-1])
-		
-    return gL
-
-
