@@ -11,7 +11,7 @@ d=D.dalecData()
 
 B=matrix([[d.sigB_cf,0,0,0,0],[0,d.sigB_cw,0,0,0],[0,0,d.sigB_cr,0,0],[0,0,0,d.sigB_cl,0],[0,0,0,0,d.sigB_cs]]) #Background error covariance matrix
 XB=np.matrix([58.,102.,770.,40.,9897.]).T #Background state
-lenrun=400 #assimilation window length
+lenrun=365 #assimilation window length
 
 #Matrix factoral function
 def Mfac(Mlist,a): #Matrix factoral to find product of M matrices
@@ -57,36 +57,36 @@ def J(X):
         yi=[]
         yi_err=[]
         obs=False
-#        if d.gpp[x]!=None:
-#            temp.append(nlhx[x,0])
-#            yi=np.append(yi,[d.gpp[x]])
-#            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
-#            obs=True
-#        if d.lf[x]!=None:
-#            temp.append(nlhx[x,1])
-#            yi=np.append(yi,[d.lf[x]])
-#            yi_err=np.append(yi_err,[d.lf_err[x]**2])
-#            obs=True
-#        if d.lw[x]!=None:
-#            temp.append(nlhx[x,2])
-#            yi=np.append(yi,[d.lw[x]])
-#            yi_err=np.append(yi_err,[d.lw_err[x]**2])
-#            obs=True
-#       if d.rt[x]!=None:
-#            temp.append(nlhx[x,3])
-#            yi=np.append(yi,[d.rt[x]])
-#            yi_err=np.append(yi_err,[d.rt_err[x]**2])
-#            obs=True
+        if d.gpp[x]!=None:
+            temp.append(nlhx[x,0])
+            yi=np.append(yi,[d.gpp[x]])
+            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
+            obs=True
+        if d.lf[x]!=None:
+            temp.append(nlhx[x,1])
+            yi=np.append(yi,[d.lf[x]])
+            yi_err=np.append(yi_err,[d.lf_err[x]**2])
+            obs=True
+        if d.lw[x]!=None:
+            temp.append(nlhx[x,2])
+            yi=np.append(yi,[d.lw[x]])
+            yi_err=np.append(yi_err,[d.lw_err[x]**2])
+            obs=True
+        if d.rt[x]!=None:
+            temp.append(nlhx[x,3])
+            yi=np.append(yi,[d.rt[x]])
+            yi_err=np.append(yi_err,[d.rt_err[x]**2])
+            obs=True
         if d.nee[x]!=None:
             temp.append(nlhx[x,4])
             yi=np.append(yi,[d.nee[x]])
             yi_err=np.append(yi_err,[d.nee_err[x]**2])
             obs=True
-#        if d.cf[x]!=None:
-#            temp.append(nlhx[x,5])
-#            yi=np.append(yi,[d.cf[x]])
-#            yi_err=np.append(yi_err,[d.cf_err[x]**2])
-#            obs=True
+        if d.cf[x]!=None:
+            temp.append(nlhx[x,5])
+            yi=np.append(yi,[d.cf[x]])
+            yi_err=np.append(yi_err,[d.cf_err[x]**2])
+            obs=True
         if obs==False:
             temp.append(0)
             yi=np.append(yi,0)
@@ -129,42 +129,42 @@ def dJ(X):
         yi=[]
         yi_err=[]
         obs=False
-#        if d.gpp[x]!=None:
-#            temp.append([GPP_diff[x],0,0,0,0])
-#            temp2.append(nlhx[x,0])
-#            yi=np.append(yi,[d.gpp[x]])
-#            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
-#            obs=True
-#        if d.lf[x]!=None:
-#            temp.append([d.p_5,0,0,0,0])
-#            temp2.append(nlhx[x,1])
-#            yi=np.append(yi,[d.lf[x]])
-#            yi_err=np.append(yi_err,[d.lf_err[x]**2])
-#            obs=True
-#        if d.lw[x]!=None:
-#            temp.append([0,0,d.p_6,0,0])
-#            temp2.append(nlhx[x,2])
-#            yi=np.append(yi,[d.lw[x]])
-#            yi_err=np.append(yi_err,[d.lw_err[x]**2])
-#            obs=True
-#        if d.rt[x]!=None:
-#            temp.append([d.p_2*GPP_diff[x],0,0,d.p_8*d.T[x],d.p_9*d.T[x]])
-#            temp2.append(nlhx[x,3])
-#            yi=np.append(yi,[d.rt[x]])
-#            yi_err=np.append(yi_err,[d.rt_err[x]**2])
-#            obs=True
+        if d.gpp[x]!=None:
+            temp.append([GPP_diff[x],0,0,0,0])
+            temp2.append(nlhx[x,0])
+            yi=np.append(yi,[d.gpp[x]])
+            yi_err=np.append(yi_err,[d.gpp_err[x]**2])
+            obs=True
+        if d.lf[x]!=None:
+            temp.append([d.p_5,0,0,0,0])
+            temp2.append(nlhx[x,1])
+            yi=np.append(yi,[d.lf[x]])
+            yi_err=np.append(yi_err,[d.lf_err[x]**2])
+            obs=True
+        if d.lw[x]!=None:
+            temp.append([0,0,d.p_6,0,0])
+            temp2.append(nlhx[x,2])
+            yi=np.append(yi,[d.lw[x]])
+            yi_err=np.append(yi_err,[d.lw_err[x]**2])
+            obs=True
+        if d.rt[x]!=None:
+            temp.append([d.p_2*GPP_diff[x],0,0,d.p_8*d.T[x],d.p_9*d.T[x]])
+            temp2.append(nlhx[x,3])
+            yi=np.append(yi,[d.rt[x]])
+            yi_err=np.append(yi_err,[d.rt_err[x]**2])
+            obs=True
         if d.nee[x]!=None:
             temp.append([-(1-d.p_2)*GPP_diff[x],0,0,-d.p_8*d.T[x],-d.p_9*d.T[x]])
             temp2.append(nlhx[x,4])
             yi=np.append(yi,[d.nee[x]])
             yi_err=np.append(yi_err,[d.nee_err[x]**2])
             obs=True
-#        if d.cf[x]!=None:
-#            temp.append([1,0,0,0,0])
-#            temp2.append(nlhx[x,5])
-#            yi=np.append(yi,[d.cf[x]])
-#            yi_err=np.append(yi_err,[d.cf_err[x]**2])
-#            obs=True
+        if d.cf[x]!=None:
+            temp.append([1,0,0,0,0])
+            temp2.append(nlhx[x,5])
+            yi=np.append(yi,[d.cf[x]])
+            yi_err=np.append(yi_err,[d.cf_err[x]**2])
+            obs=True
         if obs==False:
             temp.append([0,0,0,0,0])
             temp2.append(0)
@@ -195,7 +195,7 @@ def dJ(X):
     dJ=B.I*(X0-XB) -np.sum(Incr, axis=0) #Cost function first derivative
     dJlist=[float(dJ[0]),float(dJ[1]),float(dJ[2]),float(dJ[3]),float(dJ[4])]
     
-    return np.array(dJlist) 
+    return dJ.T #np.array(dJlist) 
 
 
 #2nd derivative of costfunction takes initial state as argument
@@ -401,7 +401,7 @@ def Plot5(X):
     plt.errorbar(gppday,gppO,yerr=gpp_err, fmt='o', label='GPP_O')
     plt.legend()
     plt.xlabel('Day')
-    plt.ylabel('GPPvalue')
+    plt.ylabel('GPPvalue (gCm$^{-2}$)')
     plt.title('DA GPP')
     plt.subplot(2,2,2)
     plt.plot(xlist,neeB,label='NEE_B')
@@ -409,7 +409,7 @@ def Plot5(X):
     plt.errorbar(needay,neeO,yerr=nee_err, fmt='o',label='NEE_O')
     plt.legend()
     plt.xlabel('Day')
-    plt.ylabel('NEEvalue')
+    plt.ylabel('NEEvalue (gCm$^{-2}$)')
     plt.title('DA NEE')
     plt.subplot(2,2,3)
 
@@ -418,7 +418,7 @@ def Plot5(X):
     plt.errorbar(rtday,rtO,yerr=rt_err, fmt='o',label='RT_O')
     plt.legend()
     plt.xlabel('Day')
-    plt.ylabel('RTvalue')
+    plt.ylabel('RTvalue (gCm$^{-2}$)')
     plt.title('DA RT')
     plt.subplot(2,2,4)
  
@@ -427,7 +427,7 @@ def Plot5(X):
     plt.errorbar(lfday,lfO,yerr=lf_err, fmt='o',label='LF_O')
     plt.legend()
     plt.xlabel('Day')
-    plt.ylabel('LFvalue')
+    plt.ylabel('LFvalue (gCm$^{-2}$)')
     plt.title('DA LF')
     plt.suptitle('DA Run with initial guess x0=%s'%(X))
     plt.show()

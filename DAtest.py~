@@ -63,7 +63,11 @@ def LmodtestACM(lam,i):
     
 def Lmodtestfunc2(lam,i, p):
     a=[abs(float(Lmodtestm(lam*10**(-x),i,p))-1) for x in range (0,5)]
+
     plt.plot(np.arange(0,len(a),1),a)
+    plt.title('Test of linear model')
+    plt.ylabel(r'$ E_R = \frac{||m({\bf x}+\gamma\delta {\bf x})-m({\bf x})||}{||{\bf M}({\bf x})\gamma\delta {\bf x}||}-1 $', fontsize=20)
+    plt.xlabel('Iteration')  
     plt.show()
     return a
     
@@ -82,10 +86,10 @@ def Gradtest(alph):
     #b=alph*d
     #h=[d,d,d,d,d]
     hM=alph*h
-    x0h=np.array(np.matrix(x0).T+ hM) #x0h=[x0[0]+b,x0[1]+b,x0[2]+b,x0[3]+b,x0[4]+b]
+    x0h=np.array(np.matrix(x0)+ hM).T #x0h=[x0[0]+b,x0[1]+b,x0[2]+b,x0[3]+b,x0[4]+b]
     a=DAC3.J(x0h)-DAC3.J(x0)
     c=hM.T*DAC3.dJ(x0)
-    return a/c,
+    return a/c
 
 def Gradtest2(alph):
     h=DAC3.dJ(x0)*(1/np.linalg.norm(DAC3.dJ(x0)))
@@ -101,6 +105,9 @@ def Gradtest2(alph):
 def Gradtestfunc(lam):
     a=[float(Gradtest(lam*10**(-x))) for x in range (0,5)]
     plt.plot(np.arange(0,len(a),1),a)
+    plt.title('Gradient test')
+    plt.ylabel(r'$\frac{J({\bf x}+\alpha{\bf h})-J({\bf x})}{\alpha{\bf h}^{T}\bigtriangledown J({\bf x})} $', fontsize=20)
+    plt.xlabel('Iteration') 
     plt.show()
     return a
 
